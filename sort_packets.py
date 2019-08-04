@@ -5,11 +5,10 @@ from scapy.all import *
 
 if len(sys.argv) <= 1:
 	use1 = "python3 sort_packets.py <pcap_file>"
-	use2 = "       python3 sort_packets.py <pcap>"
+	use2 = "       python3 sort_packets.py <pcap_file>"
 	exit("Usage: {}\n{}".format(use1, use2))
     
 pcap = rdpcap(sys.argv[1])
-icmptypes = ["echo-reply","","","destination unreachable","","redirect message","","","echo-request"]
 
 # using haslayer(), getlayer() to identify all Ethernet/IP/* packets
 for p in pcap:
@@ -30,6 +29,8 @@ for p in pcap:
 				sp = p.getlayer(UDP).sport
 				dp = p.getlayer(UDP).dport
 				print("UDP packet - source port: {}, dest port: {}".format(sp, dp))
+
+			# let's write the type as string instead of the number
 			elif p.haslayer(ICMP):
 				if p.getlayer(ICMP).type == 0:
 					icmptype = "echo-reply"
@@ -53,7 +54,7 @@ for p in pcap:
 					icmptype = "timestamp reply"
 				else:
 					icmptype = "unknown"
-				print("ICMP packet of type: {}".format(icmptype))
+				print("ICMP packet: {}".format(icmptype))
 			else:
-				print("unknown packet")
+				print("unknown IP packet type")
 
