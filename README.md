@@ -1,6 +1,6 @@
 ### short python scripts using scapy:
 
-#### dns_query.py - show DNS lookup info for domains: A and NS recs
+#### dns_query.py - DNS lookup info: A and NS recs
 * $ sudo ./dns_query.py \<domain>
 * $ sudo ./dns_query.py \<domain> A
 * $ sudo ./dns_query.py \<domain> A \<nameserver>
